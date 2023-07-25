@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Card, Container, Header, ListContainer, InputSearchContainer,
 } from './styles';
@@ -16,7 +17,7 @@ export default function Home() {
 
       <Header>
         <strong>3 contatos</strong>
-        <a href="/#">Novo contato</a>
+        <Link to="/new">Novo contato</Link>
       </Header>
 
       <ListContainer>
@@ -39,30 +40,9 @@ export default function Home() {
           </div>
 
           <div className="actions">
-            <a href="/">
+            <Link to="/edit/1">
               <img src={edit} alt="Edit" />
-            </a>
-            <button type="button">
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
-
-        <Card>
-          <div className="info">
-            <div className="contact-name">
-              <strong>Luis Antonio</strong>
-              <small>instagram</small>
-            </div>
-
-            <span>luis@gmail.com</span>
-            <span>(49) 99999999</span>
-          </div>
-
-          <div className="actions">
-            <a href="/">
-              <img src={edit} alt="Edit" />
-            </a>
+            </Link>
             <button type="button">
               <img src={trash} alt="Delete" />
             </button>
@@ -72,3 +52,9 @@ export default function Home() {
     </Container>
   );
 }
+
+fetch('http://localhost:3001/contacts')
+  .then((res) => {
+    console.log('RESPONSE: ', res);
+  })
+  .catch((err) => console.log('ERROR: ', err));
