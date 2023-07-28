@@ -1,31 +1,62 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Container, Overlay, Footer } from './styles';
-import Button from '../Button';
+import { Button } from '../Button';
+import { ReactPortal } from '../ReactPortal';
 
-export function Modal({ danger }) {
-  return ReactDOM.createPortal(
-    <Overlay>
-      <Container danger={danger}>
-        <h1>Título</h1>
+export function Modal({
+  danger, title, children, cancelLabel, confirmLabel,
+  onCancel, onConfirm, visible, isLoading,
+}) {
+  if (!visible) return null;
 
-        <p>Corpo</p>
+  return (
+    <ReactPortal containerId="modal-root">
+      <Overlay>
+        <Container danger={danger}>
+          <h1 className="title">{title}</h1>
 
-        <Footer>
-          <button className="cancel-button" type="button">Cancelar</button>
-          <Button danger={danger}>Deletar</Button>
-        </Footer>
-      </Container>
-    </Overlay>,
-    document.getElementById('modal-root'),
+          <div className="modal-body">{children}</div>
+
+          <Footer>
+            <button
+              className="cancel-button"
+              type="button"
+              onClick={onCancel}
+              disabled={isLoading}
+            >
+              {cancelLabel}
+            </button>
+            <Button
+              danger={danger}
+              onClick={onConfirm}
+              isLoading={isLoading}
+            >
+              {confirmLabel}
+
+            </Button>
+          </Footer>
+        </Container>
+      </Overlay>
+    </ReactPortal>
   );
 }
 
 Modal.propTypes = {
   danger: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  visible: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  cancelLabel: PropTypes.string,
+  confirmLabel: PropTypes.string,
+  onCancel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
   danger: false,
+  isLoading: false,
+  cancelLabel: 'Cancelar',
+  confirmLabel: 'Confirmar',
 };

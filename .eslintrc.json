@@ -11,6 +11,10 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "import/prefer-default-export": "off",
-    "react/jsx-no-bind": "off"
+    "react/jsx-no-bind": "off",
+    "no-promise-executor-return": "off",
+    "class-methods-use-this": "off",
+    "no-nested-ternary": "off",
+    "no-empty": ["error", { "allowEmptyCatch": true }]
   }
 }
